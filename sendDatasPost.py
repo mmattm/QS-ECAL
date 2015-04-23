@@ -22,7 +22,7 @@ def totimestamp(dt, epoch=datetime(1970,1,1)):
 
 def current_time_stamp():
     now = datetime.utcnow()
-    return int(totimestamp(now))
+    return str(int(totimestamp(now)))
 
 # -- Global vars --
 
@@ -74,6 +74,11 @@ def send_server_infos():
     os.system('touch '+json_file_name)
   except ValueError as e:
     logging.error('Value error')
+    logging.debug('Timestamp value ' + timestamp)
+    timestamp = current_time_stamp()
+    with open(json_file_name, 'w') as outfile:
+      json.dump({"timestamp":timestamp}, outfile, default=json_util.default)
+
   conn = sqlite3.connect(database, detect_types=sqlite3.PARSE_DECLTYPES|sqlite3.PARSE_COLNAMES)
   c = conn.cursor()
 
