@@ -70,9 +70,10 @@ def send_server_infos():
 
     
   except IOError as e:   
-    logging.debug('there is an error with reading the json file')
+    logging.error('there is an error with reading the json file')
+    os.system('touch '+json_file_name)
   except ValueError as e:
-    logging.debug('Value error')
+    logging.error('Value error')
   conn = sqlite3.connect(database, detect_types=sqlite3.PARSE_DECLTYPES|sqlite3.PARSE_COLNAMES)
   c = conn.cursor()
 
